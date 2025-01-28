@@ -86,10 +86,20 @@ public class HW1 {
          * found in the linked-list that is less than thr parameter value passed.
          */
         public void removeElementsLT ( int ltValue ) {
+            // remove nodes from head if they are less than threshold
+            while (head != null && head.data < ltValue) {
+                head = head.next;
+            }
 
-            // YOUR CODE GOES HERE
-
-            return;
+            Node current = head;
+            // traverse list and remove nodes as needed
+            while (current != null && current.next != null) {
+                if (current.next.data < ltValue) {
+                    current.next = current.next.next;
+                } else {
+                    current = current.next;
+                }
+            }
         }
 
 
@@ -97,12 +107,21 @@ public class HW1 {
          * Method removeElement() - this method removes all nodes that contain a
          * value equal to the value the provided parameter 'value'.
          */
-
         public void removeElement ( int value ) {
+            // remove nodes from head if they match target value
+            while (head != null && head.data == value) {
+                head = head.next;
+            }
 
-            // YOUR CODE GOES HERE
-
-            return;
+            Node current = head;
+            // traverse list and remove nodes as needed
+            while (current != null && current.next != null) {
+                if (current.next.data == value) {
+                    current.next = current.next.next;
+                } else {
+                    current = current.next;
+                }
+            }
         }
 
 
@@ -160,8 +179,19 @@ public class HW1 {
             Stack<Character> stack = new Stack<>();
             input = input.toLowerCase().replaceAll("\\s+", "");
 
-            // Your CODE GOES HERE
-            return false;
+            // push all characters onto stack
+            for (char c : input.toCharArray()) {
+                stack.push(c);
+            }
+
+            // check if string reads the same backwards
+            for (char c : input.toCharArray()) {
+                if (stack.pop() != c) {
+                    return false;
+                }
+            }
+            
+            return true;
         }
 
 
@@ -181,9 +211,27 @@ public class HW1 {
          * completed, place them all back in teh original stack.
          */
         public static int findLargestK(Stack<Integer> stack, int k) {
+            Stack<Integer> temp = new Stack<>();
+            int largestIndex = -1;
+            int currentIndex = 0;
 
-            // YOUR CODE GOES HERE
-            return -1;
+            // traverse stack to find largest index of target value
+            while (!stack.isEmpty()) {
+                int value = stack.pop();
+                if (value == k) { 
+                    largestIndex = currentIndex;
+                }
+
+                temp.push(value);
+                currentIndex++;
+            }
+
+            // restore original stack
+            while (!temp.isEmpty()) {
+                stack.push(temp.pop());
+            }
+
+            return largestIndex;
         }
 
     }  // End class Stacks
@@ -219,7 +267,8 @@ public class HW1 {
         */
 
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
-        return -1;
+        // correct option: O(N + M) time, O(1) space
+        return 3;
     }
 
 
@@ -240,7 +289,8 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
-        return -1;
+        // correct option: O(N log N) time
+        return 2;
     }
 
 }
